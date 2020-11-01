@@ -4,6 +4,7 @@ import (
 	. "financial/models"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,10 +26,21 @@ func SectorListAPI(c *gin.Context) {
 
 //SectorSaveAPI 保存sector
 func SectorSaveAPI(c *gin.Context) {
-	name := c.Query("name")
-	intro := c.Query("intro")
+	name := c.PostForm("name")
+	intro := c.PostForm("intro")
 	s := Sector{Name: name, Intro: intro}
 
 	s.SectorSave()
+
+}
+
+//SectorDeleteAPI 保存sector
+func SectorDeleteAPI(c *gin.Context) {
+	strID := c.PostForm("id")
+	id, _ := strconv.Atoi(strID)
+	s := Sector{ID: id}
+	log.Println(id)
+
+	s.SectorDelete()
 
 }

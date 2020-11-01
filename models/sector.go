@@ -7,7 +7,7 @@ import (
 
 //Sector 定义板块结构
 type Sector struct {
-	ID      int32 `gorm:"pk"`
+	ID      int `gorm:"pk"`
 	Name    string
 	Intro   string
 	Created int64
@@ -32,4 +32,16 @@ func (s *Sector) SectorSave() {
 	}
 
 	DB.Create(&sector)
+}
+
+//SectorDelete 删除板块
+func (s *Sector) SectorDelete() {
+	var sector Sector
+	result := DB.Where("id = ?", s.ID).First(&sector)
+
+	if result.Error == nil {
+		DB.Delete(&sector)
+	} else {
+
+	}
 }
