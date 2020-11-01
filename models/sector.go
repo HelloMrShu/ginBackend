@@ -1,7 +1,8 @@
 package models
 
 import (
-	orm "financial/database"
+	. "financial/database"
+	"time"
 )
 
 //Sector 定义板块结构
@@ -9,15 +10,26 @@ type Sector struct {
 	ID      int32 `gorm:"pk"`
 	Name    string
 	Intro   string
-	Created int32
+	Created int64
 }
 
 var sectors []Sector
 
 //SectorList 查询板块列表
 func (s Sector) SectorList() (sectors []Sector, err error) {
-	if err = orm.Eloquent.Find(&sectors).Error; err != nil {
+	if err = DB.Find(&sectors).Error; err != nil {
 		return
 	}
 	return
+}
+
+//SectorSave 保存板块
+func (s *Sector) SectorSave() {
+	sector := &Sector{
+		Name:    s.Name,
+		Intro:   s.Intro,
+		Created: time.Now().Unix(),
+	}
+
+	DB.Create(&sector)
 }

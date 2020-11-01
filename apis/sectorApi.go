@@ -22,3 +22,13 @@ func SectorListAPI(c *gin.Context) {
 		"msg":  "success",
 	})
 }
+
+//SectorSaveAPI 保存sector
+func SectorSaveAPI(c *gin.Context) {
+	name := c.Query("name")
+	intro := c.Query("intro")
+	s := Sector{Name: name, Intro: intro}
+
+	s.SectorSave()
+
+}

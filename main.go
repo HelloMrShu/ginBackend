@@ -1,11 +1,9 @@
 package main
 
-import (
-	db "financial/database"
-)
+// . "financial/database"
 
 func main() {
-	defer db.Eloquent.Close()
+	// defer DB.Close()
 	router := initRouter()
 	router.Run()
 }
