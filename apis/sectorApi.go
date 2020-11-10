@@ -2,7 +2,9 @@ package apis
 
 import (
 	. "financial/models"
+	. "financial/utils"
 	"log"
+	"math"
 	"net/http"
 	"strconv"
 
@@ -18,9 +20,22 @@ func SectorListAPI(c *gin.Context) {
 		log.Fatalln(err)
 	}
 
+	total := len(sectors)
+
+	page := c.DefaultQuery("page", "1")
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
+
+	var paginate Paginate
+	paginate.Current, _ = strconv.Atoi(page)
+	paginate.PageSize = pageSize
+	paginate.Pages = int(math.Ceil(float64(total / pageSize)))
+	paginate.Total = total
+
 	c.JSON(http.StatusOK, gin.H{
-		"data": sectors,
-		"msg":  "success",
+		"data":       sectors,
+		"msg":        "success",
+		"code":       0,
+		"pagination": paginate,
 	})
 }
 
@@ -31,7 +46,6 @@ func SectorSaveAPI(c *gin.Context) {
 	s := Sector{Name: name, Intro: intro}
 
 	s.SectorSave()
-
 }
 
 //SectorDeleteAPI 保存sector
@@ -39,8 +53,5 @@ func SectorDeleteAPI(c *gin.Context) {
 	strID := c.PostForm("id")
 	id, _ := strconv.Atoi(strID)
 	s := Sector{ID: id}
-	log.Println(id)
-
 	s.SectorDelete()
-
 }

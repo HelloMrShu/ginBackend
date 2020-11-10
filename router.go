@@ -9,8 +9,8 @@ import (
 func initRouter() *gin.Engine {
 	router := gin.Default()
 
-	router.GET("/api/sector/list", SectorListAPI)
-	router.POST("/api/sector/save", SectorSaveAPI)
-	router.POST("/api/sector/delete", SectorDeleteAPI)
+	router.GET("/sector/list", SectorListAPI)
+	router.POST("/sector/save", SectorSaveAPI)
+	router.POST("/sector/delete", SectorDeleteAPI)
 	return router
 }

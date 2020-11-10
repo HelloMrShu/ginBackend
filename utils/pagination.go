@@ -10,6 +10,14 @@ type Pagination struct {
 	Ranges     []int
 }
 
+//Paginate分页
+type Paginate struct {
+	Current  int `json:"current"`
+	PageSize int `json:"pageSize"`
+	Total    int `json:"total"`
+	Pages    int `json:"pages"`
+}
+
 func Set(page, pageSize, count int) Pagination {
 	totalPages := count / pageSize
 	if count%pageSize > 0 {
