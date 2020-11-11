@@ -24,24 +24,18 @@ func (s Sector) SectorList() (sectors []Sector, err error) {
 }
 
 //SectorSave 保存板块
-func (s *Sector) SectorSave() {
+func (s *Sector) SectorSave() error {
 	sector := &Sector{
 		Name:    s.Name,
 		Intro:   s.Intro,
 		Created: time.Now().Unix(),
 	}
 
-	DB.Create(&sector)
+	err := DB.Create(&sector).Error
+	return err
 }
 
 //SectorDelete 删除板块
-func (s *Sector) SectorDelete() {
-	var sector Sector
-	result := DB.Where("id = ?", s.ID).First(&sector)
-
-	if result.Error == nil {
-		DB.Delete(&sector)
-	} else {
-
-	}
+func (s *Sector) SectorDelete() error {
+	return DB.Delete(&Sector{ID: s.ID}).Error
 }

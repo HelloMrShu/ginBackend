@@ -34,7 +34,7 @@ func SectorListAPI(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data":       sectors,
 		"msg":        "success",
-		"code":       0,
+		"code":       200,
 		"pagination": paginate,
 	})
 }
@@ -45,7 +45,13 @@ func SectorSaveAPI(c *gin.Context) {
 	intro := c.PostForm("intro")
 	s := Sector{Name: name, Intro: intro}
 
-	s.SectorSave()
+	err := s.SectorSave()
+	code, msg := APIResponse(err)
+	c.JSON(http.StatusOK, gin.H{
+		"msg":  msg,
+		"code": code,
+	})
+
 }
 
 //SectorDeleteAPI 保存sector
@@ -53,5 +59,12 @@ func SectorDeleteAPI(c *gin.Context) {
 	strID := c.PostForm("id")
 	id, _ := strconv.Atoi(strID)
 	s := Sector{ID: id}
-	s.SectorDelete()
+	err := s.SectorDelete()
+
+	code, msg := APIResponse(err)
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg":  msg,
+		"code": code,
+	})
 }
