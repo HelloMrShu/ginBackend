@@ -7,10 +7,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+//DB object
 var DB *gorm.DB
+var err error
 
 func init() {
-	var err error
 	DB, err = gorm.Open("mysql", "root:root@tcp(localhost:3306)/finance?charset=utf8&parseTime=True&loc=Local&timeout=10ms")
 
 	if err != nil {

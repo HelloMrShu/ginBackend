@@ -15,18 +15,18 @@ import (
 func SectorListAPI(c *gin.Context) {
 
 	var st Sector
-	sectors, err := st.SectorList()
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
+
+	sectors, err := st.SectorList(page, pageSize)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	total := len(sectors)
-
-	page := c.DefaultQuery("page", "1")
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
+	total := st.SectorCount()
 
 	var paginate Paginate
-	paginate.Current, _ = strconv.Atoi(page)
+	paginate.Current = page
 	paginate.PageSize = pageSize
 	paginate.Pages = int(math.Ceil(float64(total / pageSize)))
 	paginate.Total = total
@@ -41,9 +41,10 @@ func SectorListAPI(c *gin.Context) {
 
 //SectorSaveAPI 保存sector
 func SectorSaveAPI(c *gin.Context) {
+	id, _ := strconv.Atoi(c.PostForm("id"))
 	name := c.PostForm("name")
 	intro := c.PostForm("intro")
-	s := Sector{Name: name, Intro: intro}
+	s := Sector{ID: id, Name: name, Intro: intro}
 
 	err := s.SectorSave()
 	code, msg := APIResponse(err)
@@ -51,7 +52,6 @@ func SectorSaveAPI(c *gin.Context) {
 		"msg":  msg,
 		"code": code,
 	})
-
 }
 
 //SectorDeleteAPI 保存sector
