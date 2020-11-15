@@ -1,8 +1,13 @@
 package main
 
-// . "financial/database"
+import (
+	"financial/routers"
+)
 
 func main() {
-	router := initRouter()
-	router.Run()
+	r := routers.InitRouter()
+	//r := gin.New()
+	//r.Use(costTime())
+
+	r.Run()
 }
