@@ -1,0 +1,12 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /sector/list              --> financial/apis.SectorListAPI (4 handlers)
+[GIN-debug] POST   /sector/save              --> financial/apis.SectorSaveAPI (4 handlers)
+[GIN-debug] POST   /sector/delete            --> financial/apis.SectorDeleteAPI (4 handlers)
+[GIN-debug] Environment variable PORT is undefined. Using port :8080 by default
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2020/11/22 - 20:03:21 | 200 |      4.9849ms |             ::1 | GET      "/sector/list"
